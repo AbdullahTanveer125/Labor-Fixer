@@ -5,8 +5,18 @@ import FirstMainSection from '../Components/FirstMainSection'
 import StatsSection from '../Components/StatsSection'
 import FAQsSection from '../Components/FAQsSection'
 import TestimonialsSection from '../Components/TestimonialsSection'
+import { useSelector } from "react-redux";
+
 
 function Home() {
+
+    const { user, token, isAuthenticated } = useSelector((state) => state.user);
+
+
+    console.log("User in Home Page: ", user);
+    console.log("Token in Home Page: ", token);
+
+    
     return (
         <div className='bg-slate-100'>
             <FirstNavbar />

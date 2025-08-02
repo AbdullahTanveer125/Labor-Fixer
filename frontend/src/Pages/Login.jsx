@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../Slices/userSlice";
+
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -15,6 +20,12 @@ const Login = () => {
             // Save token and user data in localStorage
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
+
+            // Save to Redux state
+            dispatch(setUser({
+                token: res.data.token,
+                user: res.data.user
+            }));
 
             // Redirect to home page
             navigate("/");
