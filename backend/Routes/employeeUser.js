@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
+
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
+
 const employeeUserController = require('../Controllers/employeeUser');
 
 // Signup - Step 1: Send verification email
-router.post('/signup', employeeUserController.signup);
+router.post('/signup', upload.single('profileImage'), employeeUserController.signup);
 
 // Verify email - Step 2: Verify email code
 router.post('/verify-email', employeeUserController.verifyEmail);

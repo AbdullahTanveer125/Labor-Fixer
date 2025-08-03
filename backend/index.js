@@ -1,11 +1,16 @@
 const express = require('express');
 const cors = require('cors');
+// const multer = require('multer');
+
+
+
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const employeeUser_router = require("./Routes/employeeUser");
 const user_router = require("./Routes/user.js");
+const employeeUser_router = require("./Routes/employeeUser");
+const clientUser_router = require("./Routes/clientUser.js");
 
 
 
@@ -17,9 +22,37 @@ app.use(express.json());
 
 
 
+
+
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// // Setup Multer for file uploads
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueName = Date.now() + '-' + file.originalname;
+//     cb(null, uniqueName);
+//   },
+// });
+// const upload = multer({ storage: storage });
+
+
+
+
+
+
+
+
 //to use router
-app.use("/employee", employeeUser_router);
+app.use('/uploads', express.static('uploads'));
 app.use("/user", user_router);
+app.use("/employee", employeeUser_router);
+app.use("/client", clientUser_router);
+
+
+
 
 
 

@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import Unauthorized_user from './Pages/UnauthorizesAccess';
 import EmployeeUser from './Pages/EmployeeUser';
 import Login from './Pages/Login';
+import ClientUser from './Pages/ClientUser';
 
 
 
@@ -29,6 +30,7 @@ function App() {
         {/* Public Routes (Available to Everyone) */}
         <Route path="/" element={<Home />} />
         <Route path="/employee-signup" element={<EmployeeUser />} />
+        <Route path="/client-signup" element={<ClientUser />} />
         <Route path="/login" element={<Login />} />
 
 

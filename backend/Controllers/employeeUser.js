@@ -48,23 +48,133 @@ const sendVerificationEmail = async (email, verificationCode) => {
   }
 };
 
-// Signup - Step 1: Send verification email
+// // Signup - Step 1: Send verification email
+// exports.signup = async (req, res) => {
+//   try {
+//     const {
+//       name, email, phone, password, gender,
+//       dateOfBirth, address, jobCategory, availability,
+//       hourlyRate, description
+//     } = req.body;
+
+//     const profileImage = req.file;
+
+//     const imageUrl = `/uploads/${profileImage.filename}`;
+
+//     const existingUser = await prisma.user.findUnique({
+//       where: { email }
+//     });
+
+
+//     if (existingUser) {
+//       return res.status(400).json({ error: 'Email already registered' });
+//     }
+
+//     // Hash password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Generate verification code
+//     const verificationCode = generateVerificationCode();
+//     const verificationCodeExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+//     // Create user with verification code
+//     // const user = await prisma.employeeUser.create({
+//     //   data: {
+//     //     name,
+//     //     email,
+//     //     phone,
+//     //     password: hashedPassword,
+//     //     profileImage,
+//     //     gender,
+//     //     dateOfBirth: new Date(dateOfBirth),
+//     //     address,
+//     //     jobCategory,
+//     //     availability,
+//     //     hourlyRate: parseFloat(hourlyRate),
+//     //     description,
+//     //     verificationCode,
+//     //     verificationCodeExpires
+//     //   }
+//     // });
+
+//     // Create User
+//     const user = await prisma.user.create({
+//       data: {
+//         name,
+//         email,
+//         phone,
+//         password: hashedPassword,
+//         profileImage,
+//       },
+//     });
+
+//     const employeeUser = await prisma.employeeUser.create({
+//       data: {
+//         userId: user.id,
+//         gender,
+//         dateOfBirth: new Date(dateOfBirth),
+//         address,
+//         jobCategory,
+//         availability,
+//         hourlyRate: parseFloat(hourlyRate),
+//         description,
+//         emailVerified: false,
+//         verificationCode,
+//         verificationCodeExpires,
+//       },
+//     });
+
+
+
+//     // Send verification email
+//     const emailSent = await sendVerificationEmail(email, verificationCode);
+
+//     // if (!emailSent) {
+//     //   // If email fails, delete the user
+//     //   await prisma.user.delete({ where: { id: user.id } });
+//     //   return res.status(500).json({ error: 'Failed to send verification email' });
+//     // }
+
+//     if (!emailSent) {
+//       // If email fails, delete the employeeUser and user
+//       await prisma.employeeUser.delete({ where: { id: employeeUser.id } });
+//       await prisma.user.delete({ where: { id: user.id } });
+//       return res.status(500).json({ error: 'Failed to send verification email' });
+//     }
+
+//     res.status(201).json({
+//       message: 'User created successfully. Please check your email for verification code.',
+//       userId: user.id
+//     });
+
+//   } catch (error) {
+//     console.error('Signup error:', error);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+
 exports.signup = async (req, res) => {
   try {
     const {
-      name, email, phone, password, profileImage, gender,
+      name, email, phone, password, gender,
       dateOfBirth, address, jobCategory, availability,
       hourlyRate, description
     } = req.body;
 
-    // Check if user already exists
-    // const existingUser = await prisma.employeeUser.findUnique({
-    //   where: { email }
-    // });
+    const profileImage = req.file;
+
+    if (!profileImage) {
+      return res.status(400).json({ error: 'Profile image is required' });
+    }
+
+    // Save only the URL (not file object)
+    const imageUrl = `/uploads/${profileImage.filename}`;
+
     const existingUser = await prisma.user.findUnique({
       where: { email }
     });
-
 
     if (existingUser) {
       return res.status(400).json({ error: 'Email already registered' });
@@ -75,27 +185,7 @@ exports.signup = async (req, res) => {
 
     // Generate verification code
     const verificationCode = generateVerificationCode();
-    const verificationCodeExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-
-    // Create user with verification code
-    // const user = await prisma.employeeUser.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     phone,
-    //     password: hashedPassword,
-    //     profileImage,
-    //     gender,
-    //     dateOfBirth: new Date(dateOfBirth),
-    //     address,
-    //     jobCategory,
-    //     availability,
-    //     hourlyRate: parseFloat(hourlyRate),
-    //     description,
-    //     verificationCode,
-    //     verificationCodeExpires
-    //   }
-    // });
+    const verificationCodeExpires = new Date(Date.now() + 10 * 60 * 1000);
 
     // Create User
     const user = await prisma.user.create({
@@ -104,7 +194,7 @@ exports.signup = async (req, res) => {
         email,
         phone,
         password: hashedPassword,
-        profileImage,
+        profileImage: imageUrl,  // <-- Store URL here
       },
     });
 
@@ -124,19 +214,10 @@ exports.signup = async (req, res) => {
       },
     });
 
-
-
     // Send verification email
     const emailSent = await sendVerificationEmail(email, verificationCode);
 
-    // if (!emailSent) {
-    //   // If email fails, delete the user
-    //   await prisma.user.delete({ where: { id: user.id } });
-    //   return res.status(500).json({ error: 'Failed to send verification email' });
-    // }
-
     if (!emailSent) {
-      // If email fails, delete the employeeUser and user
       await prisma.employeeUser.delete({ where: { id: employeeUser.id } });
       await prisma.user.delete({ where: { id: user.id } });
       return res.status(500).json({ error: 'Failed to send verification email' });
@@ -153,14 +234,39 @@ exports.signup = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Verify email - Step 2: Verify email code
 exports.verifyEmail = async (req, res) => {
   try {
     const { userId, verificationCode } = req.body;
-
+    console.log("User ID:", userId);
     const user = await prisma.employeeUser.findUnique({
-      where: { id: parseInt(userId) }
+      where: { userId: parseInt(userId) },
+      include: { user: true },  // include User details if needed
     });
+
+    console.log("User=========:", user);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
