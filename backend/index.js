@@ -8,10 +8,10 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const user_router = require("./Routes/user.js");
+// const user_router = require("./Routes/user.js");
 const employeeUser_router = require("./Routes/employeeUser");
 const clientUser_router = require("./Routes/clientUser.js");
-
+const postJob_router = require('./Routes/postJob.js');
 
 
 const app = express();
@@ -47,10 +47,10 @@ app.use(express.json());
 
 //to use router
 app.use('/uploads', express.static('uploads'));
-app.use("/user", user_router);
+// app.use("/user", user_router);
 app.use("/employee", employeeUser_router);
 app.use("/client", clientUser_router);
-
+app.use('/api/jobs', postJob_router);
 
 
 

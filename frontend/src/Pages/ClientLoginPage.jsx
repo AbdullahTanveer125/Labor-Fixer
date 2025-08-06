@@ -6,7 +6,7 @@ import { setUser } from "../Slices/userSlice";
 
 
 
-const Login = () => {
+const ClientLoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/user/login", { email, password });
+            const res = await axios.post("http://localhost:5000/client/login", { email, password });
 
             // Save token and user data in localStorage
             localStorage.setItem("token", res.data.token);
@@ -65,4 +65,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ClientLoginPage;

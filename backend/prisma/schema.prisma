@@ -51,4 +51,22 @@ model ClientUser {
   verificationCodeExpires DateTime?
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
+
+  // 🔗 Relation to Jobs
+  jobs                    Job[]     // One ClientUser has many jobs
+}
+
+model Job {
+  id          Int         @id @default(autoincrement())
+  title       String
+  category    String
+  type        String
+  description String
+  location    String?
+  attachment  String?     // file path or URL
+  createdAt   DateTime    @default(now())
+
+  // 🔹 NOW required
+  clientId    Int
+  client      ClientUser @relation(fields: [clientId], references: [id])
 }

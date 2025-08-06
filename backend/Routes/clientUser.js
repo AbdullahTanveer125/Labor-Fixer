@@ -30,6 +30,7 @@ router.delete('/:id', clientUserController.deleteClient);
 
 
 
+router.post('/login', clientUserController.loginUser);
 
 
 

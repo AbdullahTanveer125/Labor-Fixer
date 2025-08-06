@@ -9,8 +9,12 @@ import { loadFromStorage } from './Slices/userSlice';
 import Home from './Pages/Home';
 import Unauthorized_user from './Pages/UnauthorizesAccess';
 import EmployeeUser from './Pages/EmployeeUser';
-import Login from './Pages/Login';
+
 import ClientUser from './Pages/ClientUser';
+import EmployeLandingPage from './Pages/EmployeLandingPage';
+import ClientLandingPage from './Pages/ClientLandingPage';
+import PostJob from './Pages/PostJob';
+import ClientLoginPage from './Pages/ClientLoginPage';
 
 
 
@@ -31,7 +35,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/employee-signup" element={<EmployeeUser />} />
         <Route path="/client-signup" element={<ClientUser />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/client-login" element={<ClientLoginPage />} />
+        <Route path="/employee" element={<EmployeLandingPage />} />
+        <Route path="/client" element={<ClientLandingPage />} />
+        <Route path="/post-job" element={<PostJob />} />
 
 
         {/* Unauthorized Route */}
