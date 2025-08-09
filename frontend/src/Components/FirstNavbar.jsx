@@ -37,7 +37,7 @@ export default function FirstNavbar() {
 
         {/* Right: Auth Buttons */}
         <div className="hidden md:flex gap-3">
-          <Link to="/login">
+          <Link to="/login_as_a">
             <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold transition-all duration-200 hover:bg-blue-600 hover:text-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300">Login</button>
           </Link>
           <Link to="/employee-signup">
@@ -70,7 +70,7 @@ export default function FirstNavbar() {
               </Link>
             ))}
             <div className="flex gap-3 mt-2">
-              <Link to="/login" onClick={() => setMenuOpen(false)}>
+              <Link to="/login_as_a" onClick={() => setMenuOpen(false)}>
                 <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold transition-all duration-200 hover:bg-blue-600 hover:text-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-300">Login</button>
               </Link>
               <Link to="/employee-signup" onClick={() => setMenuOpen(false)}>

@@ -15,6 +15,7 @@ import EmployeLandingPage from './Pages/EmployeLandingPage';
 import ClientLandingPage from './Pages/ClientLandingPage';
 import PostJob from './Pages/PostJob';
 import ClientLoginPage from './Pages/ClientLoginPage';
+import Login_as_a from './Pages/Login_as_a';
 
 
 
@@ -33,6 +34,7 @@ function App() {
       <Routes>
         {/* Public Routes (Available to Everyone) */}
         <Route path="/" element={<Home />} />
+        <Route path="/login_as_a" element={<Login_as_a />} />
         <Route path="/employee-signup" element={<EmployeeUser />} />
         <Route path="/client-signup" element={<ClientUser />} />
         <Route path="/client-login" element={<ClientLoginPage />} />

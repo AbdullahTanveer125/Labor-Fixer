@@ -20,8 +20,9 @@ export const userSlice = createSlice({
         clearUser: (state) => {
             state.user = null;
             state.token = null;
-            localStorage.removeItem('token');
             state.isAuthenticated = false;
+            localStorage.removeItem('token');
+            localStorage.removeItem('user'); // add this line
         },
         loadFromStorage: (state) => {
             if (typeof window !== 'undefined') {

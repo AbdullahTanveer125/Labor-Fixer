@@ -3,8 +3,23 @@ import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaSearch, FaBell, FaComment, FaWallet, FaBriefcase, FaFileContract } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import logo from '../assets/react.svg';
+import { useSelector } from "react-redux";
+
+import { useDispatch } from "react-redux";
+import { clearUser } from "../Slices/userSlice"; // adjust import
+import { useNavigate } from "react-router-dom";
+
 
 export default function ClientNavbar() {
+
+    const { user, token, isAuthenticated } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    console.log("User in Client Page: ", user);
+    console.log("Token in Client Page: ", token);
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
@@ -13,6 +28,11 @@ export default function ClientNavbar() {
     const handleSearch = (e) => {
         e.preventDefault();
         console.log('Searching for:', searchQuery);
+    };
+
+    const handleLogout = () => {
+        dispatch(clearUser());
+        navigate("/");
     };
 
     return (
@@ -41,7 +61,7 @@ export default function ClientNavbar() {
                                 type="submit"
                                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-700 focus:outline-none"
                             >
-                                <FaSearch color='white'/>
+                                <FaSearch color='white' />
                             </button>
                         </div>
                     </form>
@@ -92,10 +112,22 @@ export default function ClientNavbar() {
                             className="flex items-center gap-1 focus:outline-none"
                             onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                         >
-                            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold">
-                                JD
-                            </div>
-                            <IoIosArrowDown className={`text-white transition-transform ${profileMenuOpen ? 'transform rotate-180' : ''}`} />
+                            {isAuthenticated && user?.profileImage ? (
+                                <img
+                                    src={user.profileImage.startsWith("/uploads")
+                                        ? `${import.meta.env.VITE_API_BASE_URL}${user.profileImage}`
+                                        : user.profileImage}
+                                    alt={user.name || "Profile"}
+                                    className="h-8 w-8 rounded-full object-cover border-2 border-white"
+                                />
+                            ) : (
+                                <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold">
+                                    JD
+                                </div>
+                            )}
+                            <IoIosArrowDown
+                                className={`text-white transition-transform ${profileMenuOpen ? 'transform rotate-180' : ''}`}
+                            />
                         </button>
 
                         {profileMenuOpen && (
@@ -130,10 +162,7 @@ export default function ClientNavbar() {
                                 </Link>
                                 <button
                                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 focus:outline-none"
-                                    onClick={() => {
-                                        // Handle logout logic
-                                        setProfileMenuOpen(false);
-                                    }}
+                                    onClick={handleLogout}
                                 >
                                     Logout
                                 </button>
