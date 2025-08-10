@@ -95,16 +95,16 @@ export default function ClientNavbar() {
                     </button>
 
                     {/* Messages Icon */}
-                    <Link to="/messages" className="hidden sm:flex relative text-xl text-white hover:text-blue-100 transition-colors">
+                    {/* <Link to="/messages" className="hidden sm:flex relative text-xl text-white hover:text-blue-100 transition-colors">
                         <FaComment />
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
-                    </Link>
+                    </Link> */}
 
                     {/* Notifications Bell */}
-                    <button className="relative text-xl text-white hover:text-blue-100 transition-colors focus:outline-none">
+                    {/* <button className="relative text-xl text-white hover:text-blue-100 transition-colors focus:outline-none">
                         <FaBell />
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">5</span>
-                    </button>
+                    </button> */}
 
                     {/* Profile Dropdown */}
                     <div className="relative">
@@ -146,13 +146,7 @@ export default function ClientNavbar() {
                                 >
                                     Edit Profile
                                 </Link>
-                                <Link
-                                    to="/settings"
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700"
-                                    onClick={() => setProfileMenuOpen(false)}
-                                >
-                                    Settings
-                                </Link>
+                                
                                 <Link
                                     to="/wallet"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 md:hidden"

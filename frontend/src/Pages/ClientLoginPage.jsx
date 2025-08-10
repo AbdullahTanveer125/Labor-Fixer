@@ -28,7 +28,7 @@ const ClientLoginPage = () => {
             }));
 
             // Redirect to home page
-            navigate("/");
+            navigate("/client");
         } catch (error) {
             alert(error.response?.data?.message || "Login failed");
         }
